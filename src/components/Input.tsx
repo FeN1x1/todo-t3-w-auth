@@ -9,7 +9,7 @@ const Input: React.FC<{
       <button
         className="h-4 w-4 bg-purple-300"
         onClick={handleOnClick}
-      ></button>
+      >+</button>
     </div>
   );
 };

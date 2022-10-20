@@ -18,7 +18,11 @@ export const todoRouter = router({
       });
     }),
   getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.todo.findMany();
+    return ctx.prisma.todo.findMany({
+      where: {
+        userId: ctx.session?.user?.id,
+      },
+    });
   }),
   update: publicProcedure
     .input(
