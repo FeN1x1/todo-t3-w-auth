@@ -2,21 +2,25 @@ import { router, publicProcedure } from "../trpc";
 import { z } from "zod";
 
 export const todoRouter = router({
-  saveTodo: publicProcedure
+  create: publicProcedure
     .input(z.object({ text: z.string() }))
     .mutation(({ input, ctx }) => {
       return ctx.prisma.todo.create({
         data: {
           active: false,
           text: input?.text,
-          user: ctx.session?.user?.email,
+          user: {
+            connect: {
+              id: ctx.session?.user?.id,
+            },
+          },
         },
       });
     }),
-  getAllTodos: publicProcedure.query(({ ctx }) => {
+  getAll: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.todo.findMany();
   }),
-  updateTodo: publicProcedure
+  update: publicProcedure
     .input(
       z.object({
         id: z.string(),
@@ -35,7 +39,7 @@ export const todoRouter = router({
         },
       });
     }),
-  deleteTodo: publicProcedure
+  delete: publicProcedure
     .input(
       z.object({
         id: z.string(),
