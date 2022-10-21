@@ -1,10 +1,13 @@
-import type { NextPage } from "next";
 import { useState } from "react";
-import Head from "next/head";
-import Input from "../components/Input";
-import { trpc } from "../utils/trpc";
-import List from "../components/List";
+
+import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
+import Head from "next/head";
+
+import { trpc } from "../utils/trpc";
+
+import List from "../components/List";
+import Input from "../components/Input";
 import Radio from "../components/Radio";
 
 export type TodoFilters = "All" | "Completed" | "Not Completed";
@@ -59,19 +62,21 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {session ? (
-        <>
-          <Radio radio={radio} setRadio={setRadio} />
-          <Input
-            value={input}
-            handleOnChange={(e) => setInput(e.target.value)}
-            handleOnClick={handleCreateTodo}
-          />
-          <List
-            handleDeletion={(id: string) => mutateDelete({ id })}
-            handleCheckbox={handleCheckTodo}
-            todos={filterTodos()}
-          />
-        </>
+        <div className="flex justify-center">
+          <div className="flex max-w-md flex-col">
+            <Radio radio={radio} setRadio={setRadio} />
+            <Input
+              value={input}
+              handleOnChange={(e) => setInput(e.target.value)}
+              handleOnClick={handleCreateTodo}
+            />
+            <List
+              handleDeletion={(id: string) => mutateDelete({ id })}
+              handleCheckbox={handleCheckTodo}
+              todos={filterTodos()}
+            />
+          </div>
+        </div>
       ) : (
         <div>Please log in to see your todos</div>
       )}

@@ -7,21 +7,38 @@ const Radio: React.FC<{
   setRadio: Dispatch<SetStateAction<TodoFilters>>;
 }> = ({ radio, setRadio }) => {
   return (
-    <RadioGroup value={radio} onChange={setRadio}>
-      <RadioGroup.Label>Plan</RadioGroup.Label>
+    <RadioGroup className="flex gap-2" value={radio} onChange={setRadio}>
       <RadioGroup.Option value="All">
         {({ checked }) => (
-          <span className={checked ? "bg-blue-200" : ""}>All</span>
+          <div
+            className={`cursor-pointer rounded border border-pink-300 py-1 px-2 font-semibold ${
+              checked ? "bg-pink-300" : ""
+            }`}
+          >
+            All
+          </div>
         )}
       </RadioGroup.Option>
       <RadioGroup.Option value="Completed">
         {({ checked }) => (
-          <span className={checked ? "bg-blue-200" : ""}>Completed</span>
+          <div
+            className={`cursor-pointer rounded border border-pink-300 py-1 px-2 font-semibold ${
+              checked ? "bg-pink-300" : ""
+            }`}
+          >
+            Completed
+          </div>
         )}
       </RadioGroup.Option>
       <RadioGroup.Option value="Not Completed">
         {({ checked }) => (
-          <span className={checked ? "bg-blue-200" : ""}>Not Completed</span>
+          <div
+            className={`cursor-pointer rounded border border-pink-300 py-1 px-2 font-semibold ${
+              checked ? "bg-pink-300" : ""
+            }`}
+          >
+            Not Completed
+          </div>
         )}
       </RadioGroup.Option>
     </RadioGroup>

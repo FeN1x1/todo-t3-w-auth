@@ -4,12 +4,20 @@ const Input: React.FC<{
   handleOnClick: () => void;
 }> = ({ value, handleOnChange, handleOnClick }) => {
   return (
-    <div className="flex">
-      <input value={value} onChange={handleOnChange} />
+    <div className="mx-auto flex gap-2">
+      <input
+        className="my-2 rounded border border-pink-300 px-2 py-1"
+        value={value}
+        onChange={handleOnChange}
+      />
       <button
-        className="h-4 w-4 bg-purple-300"
+        className={`my-2 rounded border border-pink-300 px-4 py-1 font-semibold transition-colors duration-200 ${
+          value !== "" ? "hover:bg-pink-300" : "cursor-not-allowed"
+        }`}
         onClick={handleOnClick}
-      >+</button>
+      >
+        Add
+      </button>
     </div>
   );
 };

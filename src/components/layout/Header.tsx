@@ -4,7 +4,7 @@ const Header: React.FC = () => {
   const { data: session } = useSession();
   console.log(session)
   return (
-    <div className="mx-auto px-4 py-5 sm:max-w-xl md:max-w-full md:px-24 lg:max-w-screen-xl lg:px-8">
+    <div className="mx-auto px-4 py-5 max-w-lg md:px-24 lg:px-8">
       <div className="relative grid grid-cols-2 items-center lg:grid-cols-2">
         <div className="inline-flex">
           <h1 className="text-5xl font-extrabold leading-normal text-gray-700 md:text-[2rem]">
