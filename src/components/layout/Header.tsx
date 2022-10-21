@@ -2,9 +2,9 @@ import { signIn, signOut, useSession } from "next-auth/react";
 
 const Header: React.FC = () => {
   const { data: session } = useSession();
-  console.log(session)
+  console.log(session);
   return (
-    <div className="mx-auto px-4 py-5 max-w-lg md:px-24 lg:px-8">
+    <div className="mx-auto max-w-lg px-4 py-5 md:px-24 lg:px-8">
       <div className="relative grid grid-cols-2 items-center lg:grid-cols-2">
         <div className="inline-flex">
           <h1 className="text-5xl font-extrabold leading-normal text-gray-700 md:text-[2rem]">
@@ -16,10 +16,10 @@ const Header: React.FC = () => {
           {!session ? (
             <li>
               <div
-                onClick={() => signIn()}
+                onClick={() => signIn("google")}
                 className="cursor-pointer font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-purple-400"
               >
-                Sign In
+                Sign In /w Google
               </div>
             </li>
           ) : (
