@@ -7,30 +7,32 @@ import List from "../components/List";
 import { useSession } from "next-auth/react";
 
 const Home: NextPage = () => {
-  const create = trpc.todo.create.useMutation();
-  const getAll = trpc.todo.getAll.useQuery();
-  const deletion = trpc.todo.delete.useMutation();
+  const { mutate: mutateCreate } = trpc.todo.create.useMutation({
+    onSuccess: () => refetch(),
+  });
+  const { data: getAll, refetch } = trpc.todo.getAll.useQuery();
+  const { mutate: mutateDelete } = trpc.todo.delete.useMutation({
+    onSuccess: () => refetch(),
+  });
+  const { mutate: mutateUpdate } = trpc.todo.update.useMutation({
+    onSuccess: () => refetch(),
+  });
+
   const { data: session } = useSession();
-
   const [input, setInput] = useState<string>("");
-
-  // const mutateTest = trpc.example.writeOne.useMutation();
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInput(e.target.value);
-  };
 
   const handleCreateTodo = () => {
     if (input !== "") {
-      create.mutate({ text: input });
-      getAll.refetch();
+      mutateCreate({ text: input });
       setInput("");
     }
   };
 
-  const handleDeleteTodo = (id: string) => {
-    deletion.mutate({ id: id });
-    getAll.refetch();
+  const handleCheckTodo = (id: string, checked: boolean) => {
+    mutateUpdate({
+      id,
+      active: !checked,
+    });
   };
 
   return (
@@ -44,10 +46,14 @@ const Home: NextPage = () => {
         <>
           <Input
             value={input}
-            handleOnChange={handleInputChange}
+            handleOnChange={(e) => setInput(e.target.value)}
             handleOnClick={handleCreateTodo}
           />
-          <List handleOnClick={handleDeleteTodo} todos={getAll?.data} />
+          <List
+            handleDeletion={(id: string) => mutateDelete({ id })}
+            handleCheckbox={handleCheckTodo}
+            todos={getAll}
+          />
         </>
       ) : (
         <div>Please log in to see your todos</div>

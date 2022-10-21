@@ -1,5 +1,5 @@
 import { router, publicProcedure } from "../trpc";
-import { z } from "zod";
+import { nullable, z } from "zod";
 
 export const todoRouter = router({
   create: publicProcedure
@@ -28,7 +28,6 @@ export const todoRouter = router({
     .input(
       z.object({
         id: z.string(),
-        text: z.string(),
         active: z.boolean(),
       })
     )
@@ -38,7 +37,6 @@ export const todoRouter = router({
           id: input.id,
         },
         data: {
-          text: input.text,
           active: input.active,
         },
       });
