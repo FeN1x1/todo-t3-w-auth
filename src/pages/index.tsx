@@ -5,6 +5,9 @@ import Input from "../components/Input";
 import { trpc } from "../utils/trpc";
 import List from "../components/List";
 import { useSession } from "next-auth/react";
+import Radio from "../components/Radio";
+
+export type TodoFilters = "All" | "Completed" | "Not Completed";
 
 const Home: NextPage = () => {
   const { mutate: mutateCreate } = trpc.todo.create.useMutation({
@@ -18,8 +21,10 @@ const Home: NextPage = () => {
     onSuccess: () => refetch(),
   });
 
-  const { data: session } = useSession();
   const [input, setInput] = useState<string>("");
+  const [radio, setRadio] = useState<TodoFilters>("All");
+
+  const { data: session } = useSession();
 
   const handleCreateTodo = () => {
     if (input !== "") {
@@ -35,6 +40,17 @@ const Home: NextPage = () => {
     });
   };
 
+  const filterTodos = () => {
+    switch (radio) {
+      case "All":
+        return getAll;
+      case "Completed":
+        return getAll?.filter((todo) => todo.active);
+      case "Not Completed":
+        return getAll?.filter((todo) => !todo.active);
+    }
+  };
+
   return (
     <>
       <Head>
@@ -44,6 +60,7 @@ const Home: NextPage = () => {
       </Head>
       {session ? (
         <>
+          <Radio radio={radio} setRadio={setRadio} />
           <Input
             value={input}
             handleOnChange={(e) => setInput(e.target.value)}
@@ -52,7 +69,7 @@ const Home: NextPage = () => {
           <List
             handleDeletion={(id: string) => mutateDelete({ id })}
             handleCheckbox={handleCheckTodo}
-            todos={getAll}
+            todos={filterTodos()}
           />
         </>
       ) : (
