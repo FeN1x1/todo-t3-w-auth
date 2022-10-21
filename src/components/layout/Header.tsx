@@ -2,7 +2,6 @@ import { signIn, signOut, useSession } from "next-auth/react";
 
 const Header: React.FC = () => {
   const { data: session } = useSession();
-  console.log(session);
   return (
     <div className="mx-auto max-w-lg px-4 py-5 md:px-24 lg:px-8">
       <div className="relative grid grid-cols-2 items-center lg:grid-cols-2">

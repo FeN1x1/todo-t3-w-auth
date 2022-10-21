@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import type { NextPage } from "next";
-import { useSession, getProviders } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Head from "next/head";
 
 import { trpc } from "../utils/trpc";
@@ -13,7 +13,6 @@ import Radio from "../components/Radio";
 export type TodoFilters = "All" | "Completed" | "Not Completed";
 
 const Home: NextPage = () => {
-  const providers = getProviders();
   const { mutate: mutateCreate } = trpc.todo.create.useMutation({
     onSuccess: () => refetch(),
   });
@@ -54,8 +53,6 @@ const Home: NextPage = () => {
         return getAll?.filter((todo) => !todo.active);
     }
   };
-
-  console.log(providers);
 
   return (
     <>
