@@ -77,7 +77,9 @@ const Home: NextPage = () => {
             />
           </div>
         ) : (
-          <div className="justify-center my-32">Please log in to see your todos</div>
+          <div className="my-32 justify-center text-xl font-semibold">
+            Please log in to see your todos
+          </div>
         )}
       </div>
     </>

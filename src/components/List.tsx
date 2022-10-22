@@ -4,7 +4,7 @@ import Toggle from "./Toggle";
 const List: React.FC<{
   todos: Todo[] | undefined;
   handleDeletion: (id: string) => void;
-  handleCheckbox: () => void;
+  handleCheckbox: (id: string, checked: boolean) => void;
 }> = ({ todos, handleDeletion, handleCheckbox }) => {
   const handleTodoDeletion = (id: string) => handleDeletion(id);
 
